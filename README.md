@@ -1,5 +1,5 @@
 # Servicio de reconocimiento extra
-Servicio realizado para el trabajo practico anual correspondiente a la asignatura Diseño de Sistemas de la carrera de Ingeniería en Sistemas de Información de la Universidad Tecnológica Nacional FRBA. 
+Servicio realizado para el trabajo práctico anual correspondiente a la asignatura Diseño de Sistemas de la carrera de Ingeniería en Sistemas de Información de la Universidad Tecnológica Nacional FRBA. 
 
 ## Integrantes del grupo
 - Facundo Gauna Somá
