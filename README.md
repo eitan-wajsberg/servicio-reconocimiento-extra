@@ -14,5 +14,6 @@ La empresa solicitará una cantidad mínima de puntos requeridos, una cantidad m
 Nuestro sistema debe devolver una lista de colaboradores a ser reconocidos por otras empresas, junto con el puntaje que obtuvo cada uno hasta el momento.
 
 ## Tecnología y lenguaje elegido
-Decidimos utilizar como lenguaje Python y Django tanto como ORM como para hacer la API REST. y Django utiliza el Active Record pattern para su ORM. En este patrón, cada modelo en Django representa tanto la estructura de la tabla en la base de datos como las operaciones que se pueden realizar en esa tabla. Es decir, las instancias de los modelos en Django son responsables de contener sus datos y los métodos para interactuar con la base de datos.
+Decidimos utilizar como lenguaje Python y Django tanto como ORM como para hacer la API REST. 
+Django utiliza el Active Record pattern para su ORM. En este patrón, cada modelo en Django representa tanto la estructura de la tabla en la base de datos como las operaciones que se pueden realizar en esa tabla. Es decir, las instancias de los modelos en Django son responsables de contener sus datos y los métodos para interactuar con la base de datos.
 Esto significa que las instancias de un modelo en Django no solo representan una fila en la base de datos, sino que también tienen métodos para guardar, actualizar, eliminar, y realizar otras operaciones directamente desde esa instancia, que es una característica clave del patrón Active Record.
