@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-zb#-0rmscdvffqt-i!to330z9s_i3k*w*j-(74!f)rpa*w269i'
+SECRET_KEY = 'django-insecure-lm1a6blpf5&)t#h+$4-^y_$f)tjv26lg1feigm%_^rg6@4!2i-'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -75,14 +75,11 @@ WSGI_APPLICATION = 'reconocimientos_extra.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'servicio-reconocimientos-extra',
-        'USER': 'root',
-        'PASSWORD': '1234',
-        'HOST': 'localhost',
-        'PORT': '3306',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
