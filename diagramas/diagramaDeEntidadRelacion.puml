@@ -1,0 +1,42 @@
+@startuml diagramaEntidadRelacion
+entity colaborador_reconocido {
+ * id: INTEGER(11) <<PK>>
+ --
+ * tipoDocumento: VARCHAR(10)
+ * nroDocumento: CHAR(8)
+ whatsapp: VARCHAR(255)
+ mail: VARCHAR(255)
+ userTelegram: VARCHAR(255)
+ * direccion: VARCHAR(255)
+ * nombre: VARCHAR(255)
+ * apellido: VARCHAR(255)
+ * fechaNacimiento: LocalDate
+ * puntajeNeto: DECIMAL
+ * cantidadViandasUltimoMes: NUMBER
+}
+
+entity solicitud {
+ * id: INTEGER(11) <<PK>>
+ --
+ * cantMaxColaboradores: NUMBER
+ * cantMinPuntos: NUMBER
+ * cantMinViandasUltimoMes: NUMBER
+ * solicitante: ??????¿???????
+ * fecha: DATE
+}
+
+' TODO: REVISAR Y CORREGIR SEGUN LO QUE NOS CONTESTE FEDE
+entity solicitante {
+ * id: INTEGER(11) <<PK>>
+ --
+ * id_usuario: INTEGER(11) <<FK>>
+ * id_rubro: INTEGER(11) <<FK>>
+ whatsapp: VARCHAR(255)
+ mail: VARCHAR(255)
+ userTelegram: VARCHAR(255)
+ * direccion: VARCHAR(255)
+}
+
+solicitud ||--o{ colaborador_reconocido
+solicitante ||--o{ solicitud
+@enduml

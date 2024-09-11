@@ -1,7 +1,6 @@
-'@startuml diagramaDeClases
+@startuml diagramaDeClases
 
 class PersonaHumana {
-
  - tipoDocumento: String
  - nroDocumento: String
  - contacto: Contacto
@@ -22,14 +21,28 @@ class Contacto {
 
 PersonaHumana --> Contacto
 
+class Recomendador{
+    + filtrarReconocidos() : List<PersonaHumana>
+}
+
 class Solicitud {
     - cantMinPuntos: Integer
     - cantMinViandasUltimoMes: Integer
     - fecha: LocalDate
     - cantMaxColaboradores: Integer
-     '* solicitante: ??????¿??????? 
-
+    - solicitante: Solicitante 
 }
+
+class Solicitante {
+ - razonSocial: String
+ - rubro: String
+ - whatsapp: String
+ - mail: String
+ - userTelegram: String
+ - direccion: String
+}
+
+Solicitud --> Solicitante
 
 '-----------------------------------------------------------------------'
 
@@ -55,11 +68,10 @@ entity solicitud {
  * cantMaxColaboradores: NUMBER
  * cantMinPuntos: NUMBER
  * cantMinViandasUltimoMes: NUMBER
- * solicitante: ??????¿???????
+ * solicitante: ¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿🥸????????????????????
  * fecha: DATE
 }
 
-' TODO: REVISAR Y CORREGIR SEGUN LO QUE NOS CONTESTE FEDE
 entity solicitante {
  * id: INTEGER(11) <<PK>>
  --
@@ -71,7 +83,7 @@ entity solicitante {
  * direccion: VARCHAR(255)
 }
 
-solicitud ||--o{ colaborador_reconocido
+solicitud   ||--o{colaborador_reconocido
 solicitante ||--o{ solicitud
 
 @enduml
