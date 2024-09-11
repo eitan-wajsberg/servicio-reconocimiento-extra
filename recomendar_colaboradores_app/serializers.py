@@ -12,11 +12,23 @@ class SolicitanteSerializer(serializers.ModelSerializer):
         fields = ['id', 'razon_social', 'rubro', 'whatsapp', 'mail', 'user_telegram', 'direccion']
 
 class SolicitudSerializer(serializers.ModelSerializer):
-    solicitante = SolicitanteSerializer()  # Embed SolicitanteSerializer
+    solicitante = SolicitanteSerializer()  # El solicitante es un serializer anidado
 
     class Meta:
         model = Solicitud
-        fields = ['id', 'cant_min_puntos', 'cant_min_viandas_ultimo_mes', 'fecha', 'cant_max_colaboradores', 'solicitante']
+        fields = ['cant_min_puntos', 'cant_min_viandas_ultimo_mes', 'fecha', 'cant_max_colaboradores', 'solicitante']
+
+    def create(self, validated_data):
+        # Extraer los datos del solicitante del validated_data
+        solicitante_data = validated_data.pop('solicitante')
+
+        # Crear el solicitante usando el solicitante_serializer
+        solicitante = Solicitante.objects.create(**solicitante_data)
+
+        # Crear la solicitud con el solicitante que acabamos de crear
+        solicitud = Solicitud.objects.create(solicitante=solicitante, **validated_data)
+
+        return solicitud
 
 class RecomendacionSerializer(serializers.ModelSerializer):
     colaboradores_recomendados = ColaboradorSerializer(many=True)  # Embed ColaboradorSerializer
