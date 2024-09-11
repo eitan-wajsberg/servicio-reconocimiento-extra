@@ -19,5 +19,7 @@ from django.urls import path
 from recomendar_colaboradores_app.views import RecomendarColaboradoresAPIView
 
 urlpatterns = [
-    path('recomendar-colaboradores/', RecomendarColaboradoresAPIView.as_view(), name='recomendar-colaboradores'),
+    path('recomendar-colaboradores/', RecomendarColaboradoresAPIView.as_view(), name='recomendar-colaboradores')
+    # path('cargar_colaboradores/', CargaColaboradoresAPIView.as_view(), name='upload_colaboradores'),
 ]
+

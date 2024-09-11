@@ -1,11 +1,10 @@
 from rest_framework import serializers
 from .models import Colaborador, Solicitud, Solicitante, Recomendacion
 
-
 class ColaboradorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Colaborador
-        fields = ['id', 'tipo_documento', 'nro_documento', 'direccion', 'nombre', 'apellido', 'fecha_nacimiento','whatsapp','mail','user_telegram', 'puntaje_neto', 'cantidad_viandas_ultimo_mes']
+        fields = '__all__'
 
 class SolicitanteSerializer(serializers.ModelSerializer):
     class Meta:
@@ -26,3 +25,5 @@ class RecomendacionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Recomendacion
         fields = ['id', 'solicitud', 'colaboradores', 'fecha_recomendacion']
+
+
