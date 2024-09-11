@@ -1,4 +1,5 @@
 @startuml diagramaEntidadRelacion
+
 entity colaborador_reconocido {
  * id: INTEGER(11) <<PK>>
  --
@@ -10,7 +11,7 @@ entity colaborador_reconocido {
  * direccion: VARCHAR(255)
  * nombre: VARCHAR(255)
  * apellido: VARCHAR(255)
- * fechaNacimiento: LocalDate
+ * fechaNacimiento: DATE
  * puntajeNeto: DECIMAL
  * cantidadViandasUltimoMes: NUMBER
 }
@@ -21,11 +22,10 @@ entity solicitud {
  * cantMaxColaboradores: NUMBER
  * cantMinPuntos: NUMBER
  * cantMinViandasUltimoMes: NUMBER
- * solicitante: ??????¿???????
+ * id_solicitante: INTEGER(11) <<FK>>
  * fecha: DATE
 }
 
-' TODO: REVISAR Y CORREGIR SEGUN LO QUE NOS CONTESTE FEDE
 entity solicitante {
  * id: INTEGER(11) <<PK>>
  --
@@ -37,6 +37,24 @@ entity solicitante {
  * direccion: VARCHAR(255)
 }
 
-solicitud ||--o{ colaborador_reconocido
+entity recomendacion {
+ * id: INTEGER(11) <<PK>>
+ --
+ colaboradoresRecomendados: List<Colaborador>
+ id_solicitud: INTEGER(11) <<FK>>
+ fechaRecomendacion: DATE
+}
+
+entity recomendacion_por_colaborador {
+    id_colaborador: INTEGER(11) <<PK, FK>> 
+    id_recomendacion: INTEGER(11) <<PK, FK>> 
+    --
+}
+
+recomendacion_por_colaborador }|---|{ colaborador_reconocido
+recomendacion_por_colaborador }|---|{ recomendacion
+
+solicitud   ||--o{ colaborador_reconocido
 solicitante ||--o{ solicitud
-@enduml
+
+@@enduml

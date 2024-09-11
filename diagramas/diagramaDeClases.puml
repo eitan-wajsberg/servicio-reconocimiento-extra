@@ -1,6 +1,6 @@
 @startuml diagramaDeClases
 
-class PersonaHumana {
+class Colaborador {
  - tipoDocumento: String
  - nroDocumento: String
  - contacto: Contacto
@@ -19,18 +19,31 @@ class Contacto {
  - userIDTelegram: String
 }
 
-PersonaHumana --> Contacto
+Colaborador --> Contacto
 
-class Recomendador{
-    + filtrarReconocidos() : List<PersonaHumana>
+class Recomendador {
+ + filtrarReconocidos(Solicitud, List<Colaborador>): Recomendacion
 }
 
+Recomendador ..> " * " Colaborador
+Recomendador ..> Solicitud
+Recomendador ..> Recomendacion
+
+class Recomendacion {
+ - colaboradoresRecomendados: List<Colaborador>
+ - solicitud: Solicitud
+ - fechaRecomendacion: LocalDate
+}
+
+Recomendacion --> Solicitud
+Recomendacion --> " * " Colaborador
+
 class Solicitud {
-    - cantMinPuntos: Integer
-    - cantMinViandasUltimoMes: Integer
-    - fecha: LocalDate
-    - cantMaxColaboradores: Integer
-    - solicitante: Solicitante 
+ - cantMinPuntos: Integer
+ - cantMinViandasUltimoMes: Integer
+ - fecha: LocalDate
+ - cantMaxColaboradores: Integer
+ - solicitante: Solicitante 
 }
 
 class Solicitante {
@@ -57,7 +70,7 @@ entity colaborador_reconocido {
  * direccion: VARCHAR(255)
  * nombre: VARCHAR(255)
  * apellido: VARCHAR(255)
- * fechaNacimiento: LocalDate
+ * fechaNacimiento: DATE
  * puntajeNeto: DECIMAL
  * cantidadViandasUltimoMes: NUMBER
 }
@@ -68,7 +81,7 @@ entity solicitud {
  * cantMaxColaboradores: NUMBER
  * cantMinPuntos: NUMBER
  * cantMinViandasUltimoMes: NUMBER
- * solicitante: ¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿🥸????????????????????
+ * id_solicitante: INTEGER(11) <<FK>>
  * fecha: DATE
 }
 
@@ -83,7 +96,24 @@ entity solicitante {
  * direccion: VARCHAR(255)
 }
 
-solicitud   ||--o{colaborador_reconocido
+entity recomendacion {
+ * id: INTEGER(11) <<PK>>
+ --
+ colaboradoresRecomendados: List<Colaborador>
+ id_solicitud: INTEGER(11) <<FK>>
+ fechaRecomendacion: DATE
+}
+
+entity recomendacion_por_colaborador {
+    id_colaborador: INTEGER(11) <<PK, FK>> 
+    id_recomendacion: INTEGER(11) <<PK, FK>> 
+    --
+}
+
+recomendacion_por_colaborador }|---|{ colaborador_reconocido
+recomendacion_por_colaborador }|---|{ recomendacion
+
+solicitud   ||--o{ colaborador_reconocido
 solicitante ||--o{ solicitud
 
 @enduml
