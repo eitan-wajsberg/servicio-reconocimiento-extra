@@ -3,23 +3,16 @@
 class Colaborador {
  - tipoDocumento: String
  - nroDocumento: String
- - contacto: Contacto
  - direccion: String
  - nombre: String
  - apellido: String
  - fechaNacimiento: LocalDate
+ - whatsapp: String
+ - mail: String
+ - userTelegram: String
  - puntajeNeto: float
  - cantidadViandasUltimoMes: Integer
 }
-
-class Contacto {
- - telefono: String
- - celular: String
- - mail: String
- - userIDTelegram: String
-}
-
-Colaborador --> Contacto
 
 class Recomendador {
  + filtrarReconocidos(Solicitud, List<Colaborador>): Recomendacion
@@ -56,64 +49,5 @@ class Solicitante {
 }
 
 Solicitud --> Solicitante
-
-'-----------------------------------------------------------------------'
-
-entity colaborador_reconocido {
- * id: INTEGER(11) <<PK>>
- --
- * tipoDocumento: VARCHAR(10)
- * nroDocumento: CHAR(8)
- whatsapp: VARCHAR(255)
- mail: VARCHAR(255)
- userTelegram: VARCHAR(255)
- * direccion: VARCHAR(255)
- * nombre: VARCHAR(255)
- * apellido: VARCHAR(255)
- * fechaNacimiento: DATE
- * puntajeNeto: DECIMAL
- * cantidadViandasUltimoMes: NUMBER
-}
-
-entity solicitud {
- * id: INTEGER(11) <<PK>>
- --
- * cantMaxColaboradores: NUMBER
- * cantMinPuntos: NUMBER
- * cantMinViandasUltimoMes: NUMBER
- * id_solicitante: INTEGER(11) <<FK>>
- * fecha: DATE
-}
-
-entity solicitante {
- * id: INTEGER(11) <<PK>>
- --
- * id_usuario: INTEGER(11) <<FK>>
- * id_rubro: INTEGER(11) <<FK>>
- whatsapp: VARCHAR(255)
- mail: VARCHAR(255)
- userTelegram: VARCHAR(255)
- * direccion: VARCHAR(255)
-}
-
-entity recomendacion {
- * id: INTEGER(11) <<PK>>
- --
- colaboradoresRecomendados: List<Colaborador>
- id_solicitud: INTEGER(11) <<FK>>
- fechaRecomendacion: DATE
-}
-
-entity recomendacion_por_colaborador {
-    id_colaborador: INTEGER(11) <<PK, FK>> 
-    id_recomendacion: INTEGER(11) <<PK, FK>> 
-    --
-}
-
-recomendacion_por_colaborador }|---|{ colaborador_reconocido
-recomendacion_por_colaborador }|---|{ recomendacion
-
-solicitud   ||--o{ colaborador_reconocido
-solicitante ||--o{ solicitud
 
 @enduml

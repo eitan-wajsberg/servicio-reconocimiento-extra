@@ -51,10 +51,10 @@ entity recomendacion_por_colaborador {
     --
 }
 
-recomendacion_por_colaborador }|---|{ colaborador_reconocido
-recomendacion_por_colaborador }|---|{ recomendacion
+recomendacion_por_colaborador }|---|| colaborador_reconocido
+recomendacion_por_colaborador }|---|| recomendacion
 
 solicitud   ||--o{ colaborador_reconocido
-solicitante ||--o{ solicitud
+solicitante ||--|{ solicitud
 
-@@enduml
+@enduml
