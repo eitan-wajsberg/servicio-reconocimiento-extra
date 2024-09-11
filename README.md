@@ -18,77 +18,134 @@ Decidimos utilizar como lenguaje Python y Django tanto como ORM como para hacer 
 Django utiliza el Active Record pattern para su ORM. En este patrón, cada modelo en Django representa tanto la estructura de la tabla en la base de datos como las operaciones que se pueden realizar en esa tabla. Es decir, las instancias de los modelos en Django son responsables de contener sus datos y los métodos para interactuar con la base de datos.
 Esto significa que las instancias de un modelo en Django no solo representan una fila en la base de datos, sino que también tienen métodos para guardar, actualizar, eliminar, y realizar otras operaciones directamente desde esa instancia, que es una característica clave del patrón Active Record.
 
-# Documentación de la API
+# Documentación de la API - RecomendarColaboradoresAPIView
 
-## Endpoint: Recomendar Colaboradores
+## Descripción
 
-**Método:** `GET`
+Esta API recomienda colaboradores basados en los parámetros proporcionados y crea registros de solicitud, solicitante y recomendación.
 
-**URL:** `/recomendar-colaboradores/`
+## Método
 
-**Descripción:**
-Obtiene una lista de colaboradores recomendados basados en los parámetros de puntuación mínima y donaciones mínimas.
+`POST`
 
-**Parámetros de Consulta:**
+## URL
 
-- `puntos_minimos` (opcional): La puntuación mínima requerida para los colaboradores. Tipo: `integer`. Valor predeterminado: `0`.
-- `donaciones_minimas` (opcional): La cantidad mínima de viandas donadas en el último mes. Tipo: `integer`. Valor predeterminado: `0`.
-- `max_colaboradores` (opcional): El número máximo de colaboradores a devolver. Tipo: `integer`. Valor predeterminado: `10`.
+`/recomendar-colaboradores/`
 
-**Ejemplo de Solicitud:**
+## Parámetros de Solicitud
 
-```http
-GET /recomendar-colaboradores/?puntos_minimos=50&donaciones_minimas=5&max_colaboradores=3 HTTP/1.1
-Host: localhost:8000
+**Cuerpo de la solicitud (`request body`):**
+
+```json
+{
+    "puntos_minimos": 50,
+    "donaciones_minimas": 5,
+    "max_colaboradores": 10,
+    "solicitante": {
+        "razon_social": "Empresa U",
+        "rubro": "Tecnología",
+        "whatsapp": "+1234567890",
+        "mail": "contacto@empresa.com",
+        "user_telegram": "@empresa999",
+        "direccion": "123 Calle Falsa"
+    },
+    "colaboradores": [
+        {
+            "tipo_documento": "DNI",
+            "nro_documento": "87654321",
+            "direccion": "789 Calle Nueva",
+            "nombre": "Ana",
+            "apellido": "Gómez",
+            "fecha_nacimiento": "1990-05-15",
+            "whatsapp": "+1122334455",
+            "mail": "ana@ejemplo.com",
+            "user_telegram": "@ana",
+            "puntaje_neto": 70,
+            "cantidad_viandas_ultimo_mes": 15
+        }
+        // más colaboradores...
+    ]
+}
 ```
 
-## Cargar Colaboradores
+## Respuesta Exitosa
 
-**Método:** `POST`
-
-**URL:** `/recomendar-colaboradores/`
-
-**Descripción:**
-Permite cargar una lista de colaboradores a la base de datos.
-
-**Cuerpo de la Solicitud:**
-
-- Tipo: application/json
-- Contenido: Una lista de objetos de colaborador.
-
-**Ejemplo de Solicitud:**
-
-```http
-POST /carga-colaboradores/ HTTP/1.1
-Host: localhost:8000
-Content-Type: application/json
-
-[
-    {
-        "tipo_documento": "DNI",
-        "nro_documento": "12345678",
-        "direccion": "Calle Falsa 123",
-        "nombre": "Juan",
-        "apellido": "Pérez",
-        "fecha_nacimiento": "1980-01-01",
-        "whatsapp": "+123456789",
-        "mail": "juan.perez@example.com",
-        "user_telegram": "@juanperez",
-        "puntaje_neto": "75.50",
-        "cantidad_viandas_ultimo_mes": 10
-    },
-    {
-        "tipo_documento": "DNI",
-        "nro_documento": "87654321",
-        "direccion": "Avenida Siempre Viva 742",
-        "nombre": "Ana",
-        "apellido": "Gómez",
-        "fecha_nacimiento": "1990-05-15",
-        "whatsapp": "+987654321",
-        "mail": "ana.gomez@example.com",
-        "user_telegram": "@anagomez",
-        "puntaje_neto": "80.00",
-        "cantidad_viandas_ultimo_mes": 5
+**Código de Estado:** 200 OK
+**Cuerpo de la respuesta (response body):**
+```json
+{
+    "message": "Solicitud, Solicitante, y Recomendación guardados exitosamente.",
+    "data": {
+        "solicitante": {
+            "id": 1,
+            "razon_social": "Empresa U",
+            "rubro": "Tecnología",
+            "whatsapp": "+1234567890",
+            "mail": "contacto@empresa.com",
+            "user_telegram": "@empresa999",
+            "direccion": "123 Calle Falsa"
+        },
+        "solicitud": {
+            "id": 1,
+            "cant_min_puntos": 50,
+            "cant_min_viandas_ultimo_mes": 5,
+            "fecha": "2024-09-11",
+            "cant_max_colaboradores": 10,
+            "solicitante": 1
+        },
+        "colaboradores": [
+            {
+                "id": 1,
+                "tipo_documento": "DNI",
+                "nro_documento": "87654321",
+                "direccion": "789 Calle Nueva",
+                "nombre": "Ana",
+                "apellido": "Gómez",
+                "fecha_nacimiento": "1990-05-15",
+                "whatsapp": "+1122334455",
+                "mail": "ana@ejemplo.com",
+                "user_telegram": "@ana",
+                "puntaje_neto": 70,
+                "cantidad_viandas_ultimo_mes": 15
+            }
+            // más colaboradores...
+        ],
+        "recomendacion": {
+            "id": 1,
+            "fecha_recomendacion": "2024-09-11"
+        }
     }
-]
+}
+```
+
+## Respuestas de Error
+
+**Código de Estado:** 400 Bad Request.
+
+**Ejemplos de cuerpo de respuesta (response body):**
+
+```json
+{
+    "error": "El campo 'solicitante' debe ser un diccionario."
+}
+```
+```json
+{
+    "error": "No se encontraron colaboradores con los criterios especificados."
+}
+```
+```json
+{
+    "error": "Este campo no puede ser nulo."
+}
+```
+```json
+{
+    "error": "Error al procesar los datos del colaborador.",
+    "details": {
+        "colaboradores": [
+            "Field 'id' expected a number but got {'tipo_documento': 'DNI', ...}"
+        ]
+    }
+}
 ```
