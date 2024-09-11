@@ -16,7 +16,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from recomendar_colaboradores_app.views import RecomendarColaboradoresAPIView
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('recomendar-colaboradores/', RecomendarColaboradoresAPIView.as_view(), name='recomendar-colaboradores'),
 ]
