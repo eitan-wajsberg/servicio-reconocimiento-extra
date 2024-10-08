@@ -18,6 +18,93 @@ Decidimos utilizar como lenguaje Python y Django tanto como ORM como para hacer 
 Django utiliza el Active Record pattern para su ORM. En este patrón, cada modelo en Django representa tanto la estructura de la tabla en la base de datos como las operaciones que se pueden realizar en esa tabla. Es decir, las instancias de los modelos en Django son responsables de contener sus datos y los métodos para interactuar con la base de datos.
 Esto significa que las instancias de un modelo en Django no solo representan una fila en la base de datos, sino que también tienen métodos para guardar, actualizar, eliminar, y realizar otras operaciones directamente desde esa instancia, que es una característica clave del patrón Active Record.
 
+# Guía de Uso en Local
+
+Esta guía detalla los pasos para configurar y ejecutar el servicio de reconocimiento extra en un entorno local utilizando Django.
+
+## Requisitos Previos
+
+### Instalación de Dependencias
+
+Antes de comenzar, asegúrate de tener instalado lo siguiente:
+
+1. **Python 3.10 o superior**: Puedes descargar Python desde [aquí](https://www.python.org/downloads/).
+2. **MySQL**: Asegúrate de tener instalado y configurado MySQL. Puedes descargar MySQL desde [aquí](https://dev.mysql.com/downloads/installer/).
+
+### Instalar Django y otras Dependencias
+
+Instala Django y las demás dependencias del proyecto utilizando `pip`:
+
+```bash
+pip install Django==5.1.1 mysqlclient
+```
+
+> **Nota:** `mysqlclient` es necesario para conectar Django con MySQL.
+
+## Configuración de la Base de Datos
+
+Abre el archivo `reconocimientos_extra/settings.py` y localiza la configuración de la base de datos. Debes modificar los parámetros para que coincidan con tu configuración local de MySQL:
+
+```python
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'servicio-reconocimientos-extra',
+        'USER': 'root',
+        'PASSWORD': '1234',
+        'HOST': 'localhost',
+        'PORT': '3306',
+    }
+}
+```
+
+- **NAME**: Nombre de la base de datos que crearás para el proyecto.
+- **USER**: Usuario de la base de datos con permisos para crear y modificar tablas.
+- **PASSWORD**: Contraseña del usuario de la base de datos.
+- **HOST**: Dirección del servidor de base de datos (usualmente `localhost` para entornos locales).
+- **PORT**: Puerto por defecto de MySQL (`3306`).
+
+### Creación de la Base de Datos
+
+Accede a MySQL desde la terminal o desde una herramienta gráfica (como MySQL Workbench) y crea la base de datos que usará Django:
+
+```sql
+CREATE DATABASE servicio-reconocimientos-extra CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+```
+
+## Migraciones y Configuración Inicial
+
+1. **Aplicar Migraciones**: Ejecuta las migraciones para crear las tablas necesarias en la base de datos:
+
+    ```bash
+    python manage.py makemigrations
+    python manage.py migrate
+    ```
+
+2. **Crear Superusuario**: Esto te permitirá acceder al panel de administración de Django. Ejecuta el siguiente comando y sigue las instrucciones para definir el nombre de usuario, correo y contraseña:
+
+    ```bash
+    python manage.py createsuperuser
+    ```
+
+3. **Iniciar el Servidor de Desarrollo**: Una vez configurada la base de datos y creado el superusuario, puedes iniciar el servidor local:
+
+    ```bash
+    python manage.py runserver
+    ```
+
+    El servidor estará disponible en `http://127.0.0.1:8000/` por defecto.
+
+## Acceso al Panel de Administración
+
+Para acceder al panel de administración de Django, donde puedes gestionar los modelos y la base de datos, navega a:
+
+```
+http://127.0.0.1:8000/admin/
+```
+
+Inicia sesión con las credenciales del superusuario que creaste anteriormente.
+
 # Documentación de la API - RecomendarColaboradoresAPIView
 
 ## Descripción
